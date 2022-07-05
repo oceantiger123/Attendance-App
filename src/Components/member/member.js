@@ -1,21 +1,27 @@
-import React from "react";
-
-const dummyData = [{id: 1, name: "Sarah", imageUrl: "Photo-Coming"}, 
-                    {id: 2, name: "James", imageUrl: "Photo-Coming"}, 
-                    {id: 3, name: "John", imageUrl: "Photo-Coming"}]
-
+import axios from "axios";
+import {useState, useEffect} from "react";
 
 const Members = () => {
-    return (
-      <div >
-          <h3>Number of members attended the meeting on Sunday: {dummyData.length}</h3>
+    const [members, setMembers] = useState([]);
 
-            {dummyData.map((member) => (
+    useEffect(()=>{
+      (async()=>{
+        const {data: members} = await axios.get('/api/members');
+        setMembers(members);
+      })();
+    }, []);
+    
+    return (
+      
+      <div >
+          <h3>Number of members: {members.length}</h3>
+
+            {members.map((member) => (
             <li key = {member.id}>{member.name}</li>) 
             )}
            
       </div>
-    );
+    )
   };
 
 export default Members;
