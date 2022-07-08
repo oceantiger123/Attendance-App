@@ -1,23 +1,31 @@
 import axios from "axios";
 import {useState, useEffect} from "react";
+import { Link } from "react-router-dom";
+//import SingleDateAttendance from "../singleDateAttended/attendance";
 
 const Dates = () => {
     const [dates, setDates] = useState([]);
 
     useEffect(()=> {
         (async()=> {
-            const {data: dates} = await axios.get('/api/dates');
-            setDates(dates);
+            const {data: date} = await axios.get('/api/dates');
+            setDates(date);
         })();
     }, []);
 
 
     return (
         <div>
+        
             <h3>The following dates have been taken attandence.</h3>
 
             {dates.map((date)=> (
-                <li key={date.id}>{date.date}</li>
+                <Link to={`/dates/${date.id}`}>
+                  <li key={date.id}>{date.date}</li>
+                  {/* <SingleDateAttendance dateId = {date.id} /> */}
+                  
+                </Link>
+                
             ))}
         </div>
     )

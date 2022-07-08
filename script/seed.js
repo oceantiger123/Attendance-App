@@ -1,6 +1,6 @@
 'use strict'
 
-const {db, models: { Member, Date}} = require('../server/db')
+const {db, models: { Member, Date, Member_Date}} = require('../server/db')
 //const {Date} = require('../server/db/models')
 
 // const productsDummyData = [
@@ -70,9 +70,13 @@ const dummyData = [{id: 1, name: "Sarah", imageUrl: "Photo-Coming"},
                     {id: 2, name: "James", imageUrl: "Photo-Coming"}, 
                     {id: 3, name: "John", imageUrl: "Photo-Coming"}];
 
+const dummyAttendance = [{memberId: 1, dateId: 1},
+                     {memberId: 1, dateId: 2},
+                     {memberId: 1, dateId: 3}];
+
 const dummyDates = [{id: 1, date: '5/1/2022'},
                      {id: 2, date: '5/2/2022'},
-                     {id: 3, date: '5/3/2022'}]
+                     {id: 3, date: '5/3/2022'}];
 
 /**
  * seed - this function clears the database, updates tables to
@@ -87,10 +91,13 @@ async function seed() {
 
   const dates = await Promise.all(dummyDates.map(date => Date.create(date)))
 
+  const attendantDate = await Promise.all(dummyAttendance.map(attendDate => Member_Date.create(attendDate)))
+
   //const users = await Promise.all(usersDummyData.map(user => User.create(user)))
 
   console.log(`seeded ${members.length}  members`)
   console.log(`seeded ${dates.length}  dates`)
+  console.log(`seeded ${attendantDate.length}  attendantDate`)
   console.log(`seeded successfully`)
   // return {
   //   users: {

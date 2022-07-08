@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-    models: { Date },
+    models: { Date, Member_Date },
 } = require("../db");
 
 router.get("/", async(req, res, next) => {
@@ -13,4 +13,16 @@ router.get("/", async(req, res, next) => {
     }
 });
 
+router.get("/:id", async(req, res, next) =>{
+    try{
+        const singleDateAttend = await Member_Date.findAll({
+            where: {
+                dateId: req.params.id
+            }
+        })
+        res.json(singleDateAttend)
+    } catch(err){
+        next(err)
+    }
+})
 module.exports = router;
