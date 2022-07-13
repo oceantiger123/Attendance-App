@@ -4,13 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "tachyons";
-//import {Router} from 'react-router-dom';
-//import history from './history.js'
+import history from './history'
 import {BrowserRouter} from 'react-router-dom'
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
+  <BrowserRouter history={history}>
+    {/* <Router history={history}> */}
+      <App />
+    {/* </Router> */}
   </BrowserRouter>,
   document.getElementById('root')
 );

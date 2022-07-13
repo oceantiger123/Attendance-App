@@ -10,6 +10,7 @@ import Home from "./Components/Home";
 import Navbar from "./Components/Navbar";
 import Dates from "./Components/dates/dates";
 import SingleDateAttendance from "./Components/singleDateAttended/attendance";
+import { Onemember } from "./Components/member/oneMember";
 
 // const app = new Clarifai.App({ apiKey: "bbcb6e3cd926404da5e1207117fbec31" });
 
@@ -85,6 +86,7 @@ const App = () => {
       <Route exact path="/" element={<Home />}/>
        <Route exact path="/members" element={<Members />}/>
        <Route exact path="/dates" element={<Dates />}/>
+       <Route exact path="/members/:id" element={<Onemember />}/>
        <Route exact path="/dates/:id" element={<SingleDateAttendance />}/>
        <Route exact path="/calendar" element={<AttendentCalendar />}/>
       </Routes> 

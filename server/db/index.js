@@ -18,7 +18,11 @@ const Member_Date = require('./models/MemberDate')
 // Order.belongsToMany(Product, {through: Order_Products})
 
 Member.belongsToMany(Date, { through: Member_Date});
-Date.belongsToMany(Member, {through: Member_Date})
+Date.belongsToMany(Member, {through: Member_Date});
+Member.hasMany(Member_Date);
+Member_Date.belongsTo(Member);
+Date.hasMany(Member_Date);
+Member_Date.belongsTo(Date);
 
 
 module.exports = {

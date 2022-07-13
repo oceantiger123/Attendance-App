@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
+import { Date } from "./date";
 //import SingleDateAttendance from "../singleDateAttended/attendance";
 
 const Dates = () => {
@@ -13,18 +14,21 @@ const Dates = () => {
         })();
     }, []);
 
-
+    //console.log("need key for date", props)
     return (
         <div>
         
             <h3>The following dates have been taken attandence.</h3>
 
             {dates.map((date)=> (
-                <Link to={`/dates/${date.id}`}>
-                  <li key={date.id}>{date.date}</li>
-                  {/* <SingleDateAttendance dateId = {date.id} /> */}
+
+                <Date key={date.id} dateId={date.id} date={date.date} />
+
+                // <Link to={`/dates/${date.id}`}>
+                //   <li key={date.id}>{date.date}</li>
+                //   {/* <SingleDateAttendance dateId = {date.id} /> */}
                   
-                </Link>
+                // </Link>
                 
             ))}
         </div>

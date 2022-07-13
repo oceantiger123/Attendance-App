@@ -72,11 +72,13 @@ const dummyData = [{id: 1, name: "Sarah", imageUrl: "Photo-Coming"},
 
 const dummyAttendance = [{memberId: 1, dateId: 1},
                      {memberId: 1, dateId: 2},
-                     {memberId: 1, dateId: 3}];
+                     {memberId: 2, dateId: 3},
+                     {memberId: 1, dateId: 4}];
 
 const dummyDates = [{id: 1, date: '5/1/2022'},
                      {id: 2, date: '5/2/2022'},
-                     {id: 3, date: '5/3/2022'}];
+                     {id: 3, date: 'Jul 02 2022'},
+                     {id: 4, date: 'Jul 01 2022'}];
 
 /**
  * seed - this function clears the database, updates tables to
