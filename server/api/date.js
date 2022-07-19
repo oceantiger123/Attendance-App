@@ -20,9 +20,7 @@ router.get("/:id", async(req, res, next) =>{
             where: {
                 dateId: req.params.id
             },
-            include: {
-                model: Member
-            }
+            include: [{model: Member}, {model: Date}]
             
         })
         res.json(singleDateAttend)
@@ -30,6 +28,21 @@ router.get("/:id", async(req, res, next) =>{
         next(err)
     }
 })
+
+// router.get("/:id/:date", async(req, res, next) =>{
+//     try{
+//         const bodyText = req.query;
+//         const date = await Date.findAll({
+//             where: {
+//                 date: bodyText.findDate
+//             }
+//         });
+//         res.json(date);
+//         //res.json(bodyText)
+//     } catch(err){
+//         next(err)
+//     }
+// })
 
 router.get("/:id/:date", async(req, res, next) =>{
     try{
@@ -39,7 +52,19 @@ router.get("/:id/:date", async(req, res, next) =>{
                 date: bodyText.findDate
             }
         });
-        res.json(date);
+        if(date[0]) {
+            const singleDateAttend = await Member_Date.findAll({
+                where: {
+                    dateId: date[0].id
+                },
+                include: [{model: Member}, {model: Date}]
+                
+            })
+            res.json(singleDateAttend)
+        } else {
+
+            res.send("Not Found");
+        }
         //res.json(bodyText)
     } catch(err){
         next(err)

@@ -7,6 +7,7 @@ const AttendentCalendar = () => {
   
   const [date, setDate] = useState(new Date());
   const [dates, setDates] = useState([]);
+  
   let curDate = date.toString().slice(4,15)
   useEffect(()=> {
     (async()=> {
@@ -27,6 +28,7 @@ const AttendentCalendar = () => {
       ) : (
         
         <Calendar onChange={onChange} value={date}/>
+      
       )
       }
     </div>

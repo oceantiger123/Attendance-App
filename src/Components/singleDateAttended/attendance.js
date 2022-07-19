@@ -19,7 +19,7 @@ const SingleDateAttendance = () => {
     
     return (
         <div>
-            <h3>The following members attended:</h3>
+            <h3>The following members attended on:</h3>
             {attendance.map((attender)=>(
                 <li key={attender.id}>{attender.member.name}</li>
             ))}
