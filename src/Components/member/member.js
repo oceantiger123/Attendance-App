@@ -1,14 +1,11 @@
 import axios from "axios";
 import {useState, useEffect} from "react";
-//import { Link } from "react-router-dom";
-import { Onemember } from "./oneMember";
+import { Link } from "react-router-dom";
+//import { Onemember } from "./oneMember";
 
 const Members = () => {
     const [members, setMembers] = useState([]);
-    const [formData, setFormData] = useState({
-      name: "",
-      phone: ""
-    });
+    const [formData, setFormData] = useState({});
 
     useEffect(()=>{
       (async()=>{
@@ -23,11 +20,11 @@ const Members = () => {
         [event.target.name]: event.target.value
       })
     }
-    console.log("formData", formData)
     const handleSubmit = async (event)=>{
       event.preventDefault();
       const {data: members}= await axios.post('/api/members', formData);
-      setMembers(members)
+      setMembers(members);
+      setFormData({})
     }
     return (
       
@@ -45,7 +42,11 @@ const Members = () => {
 
           <h3>Number of members: {members.length}</h3>
             {members.map((member) => (
-               <Onemember key={member.id} memberId={member.id} member={member.name} />
+              <Link to={`/members/${member.id}`} key={member.id}>
+               <li >
+                 {member.name}
+               </li>
+              </Link>
             ))}
 
            

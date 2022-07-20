@@ -13,7 +13,15 @@ const Member = db.define('member', {
       type: Sequelize.INTEGER,
       allowNull: true,
       defaultValue: 1234567890
+  },
+  image: {
+    type: Sequelize.TEXT,
+    allowNull: true,
+    defaultValue: "/Users/benye/Desktop/fullstack/aaafolder/asynweek/face-detect/imageHead.webp"
   }
+})
+
+module.exports = Member
 //   price: {
 //     type: Sequelize.INTEGER,
 //     allowNull: false,
@@ -47,10 +55,3 @@ const Member = db.define('member', {
 //     allowNull: true,
 //     defaultValue: "Details information come soon..."
 //   },
-//   imageUrl: {
-//     type: Sequelize.STRING,
-//     defaultValue: "https://cdn.dribbble.com/users/1044993/screenshots/12436018/media/4af5b5c62eba141322e11e2747a1d9fd.png?compress=1&resize=1600x1200"
-//   }
-})
-
-module.exports = Member

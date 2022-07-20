@@ -15,7 +15,17 @@ router.get("/", async(req, res, next) => {
         next(err);
     }
 });
-
+//get /api/members/id:
+router.get("/:id", async(req, res, next) => {
+    try {
+        const member = await Member.findByPk(req.params.id);
+       
+        res.json(member);
+     
+    } catch(err){
+        next(err);
+    }
+});
 //post /api/members
 router.post("/", async(req, res, next)=> {
     try {
@@ -26,4 +36,15 @@ router.post("/", async(req, res, next)=> {
         next(err)
     }
 })
+//put /api/members/:id
+router.put("/:id", async(req, res, next)=>{
+    try{
+        const member = await Member.findByPk(req.params.id);
+        const updatedMember = await member.update(req.body);
+        res.send(updatedMember)
+    } catch(err){
+        next(err)
+    }
+})
+
 module.exports = router;
