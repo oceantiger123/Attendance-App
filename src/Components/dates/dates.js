@@ -1,35 +1,29 @@
 import axios from "axios";
 import {useState, useEffect} from "react";
-//import { Link } from "react-router-dom";
-import { Date } from "./date";
-//import SingleDateAttendance from "../singleDateAttended/attendance";
+import { Link } from "react-router-dom";
+import "./dates.css"
 
 const Dates = () => {
     const [dates, setDates] = useState([]);
 
     useEffect(()=> {
         (async()=> {
-            const {data: date} = await axios.get('/api/dates');
-            setDates(date);
+            const {data: dates} = await axios.get('/api/dates');
+            setDates(dates);
         })();
     }, []);
 
-    //console.log("need key for date", props)
     return (
-        <div>
-        
+        <div className="datesComp">
             <h3>The following dates have been taken attandence.</h3>
 
             {dates.map((date)=> (
 
-                <Date key={date.id} dateId={date.id} date={date.date} />
-
-                // <Link to={`/dates/${date.id}`}>
-                //   <li key={date.id}>{date.date}</li>
-                //   {/* <SingleDateAttendance dateId = {date.id} /> */}
-                  
-                // </Link>
-                
+                <Link to={`/dates/${date.id}`} key={date.id}>
+               <li>
+                 {date.date}
+               </li>
+              </Link>
             ))}
         </div>
     )

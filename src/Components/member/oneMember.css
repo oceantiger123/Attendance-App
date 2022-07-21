@@ -1,0 +1,13 @@
+.oneMemberComp {
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px;
+  };
+
+  .resize {
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+  }
+  

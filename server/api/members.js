@@ -35,7 +35,7 @@ router.post("/", async(req, res, next)=> {
     } catch(err){
         next(err)
     }
-})
+});
 //put /api/members/:id
 router.put("/:id", async(req, res, next)=>{
     try{
@@ -46,5 +46,14 @@ router.put("/:id", async(req, res, next)=>{
         next(err)
     }
 })
-
+//delete /api/members/:id
+router.delete("/:id", async(req, res, next)=>{
+    try{
+        const member = await Member.findByPk(req.params.id);
+        await member.destroy();
+        res.send(member);
+    } catch(err){
+        next(err)
+    }
+});
 module.exports = router;

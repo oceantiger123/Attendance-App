@@ -1,7 +1,7 @@
 import axios from "axios";
 import {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
-//import { Onemember } from "./oneMember";
+import "./member.css";
 
 const Members = () => {
     const [members, setMembers] = useState([]);
@@ -40,12 +40,12 @@ const Members = () => {
             <button type="submit"> Add Member </button>
           </form>
 
-          <h3>Number of members: {members.length}</h3>
+          <h3>Total Number of Members: {members.length}</h3>
             {members.map((member) => (
               <Link to={`/members/${member.id}`} key={member.id}>
-               <li >
+               <ul>
                  {member.name}
-               </li>
+               </ul>
               </Link>
             ))}
 

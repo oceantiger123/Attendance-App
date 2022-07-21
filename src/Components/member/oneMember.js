@@ -1,11 +1,11 @@
 import axios from "axios";
 import {useState, useEffect} from "react";
 import { useLocation } from "react-router-dom";
+import "./oneMember.css"
 
 export const Onemember = () => {
     const {pathname} = useLocation();
-    const myparam = pathname.slice(9);
-    console.log("pathname", myparam)
+    let myparam = pathname.slice(9);
     const [formData, setFormData] = useState({});
   
     const [member, setMember] = useState({});
@@ -21,18 +21,23 @@ export const Onemember = () => {
           ...formData, 
           [event.target.name]: event.target.value
         })
-      }
-      console.log("formData", formData)
+      };
+
       const handleSubmit = async (event)=>{
         event.preventDefault();
         const {data: member}= await axios.put(`/api/members/${myparam}`, formData);
-        //console.log('daata', data)
-        setMember(member)
+        setMember(member);
         setFormData({})
-      }
+      };
+
+      const handleDelete = async()=>{
+        await axios.delete(`/api/members/${myparam}`);
+        setMember({})
+      };
     return(
         
         <div className="oneMemberComp">
+          
             <form onSubmit={handleSubmit}>
             <label htmlFor="name"> Member Name</label>
             <input name="name" value={formData.name} onChange={handleChange}/>
@@ -42,9 +47,13 @@ export const Onemember = () => {
 
             <button type="submit"> Update Member </button>
           </form>
-
-           <p>{member.name}</p>
-           
+          {/* <img className="resize" src={member.image} alt=""/> */}
+           <h3>{member.name}</h3>
+         
+           <button onClick={handleDelete}>
+             Delete this member
+           </button>
+          
         </div>       
 
     )

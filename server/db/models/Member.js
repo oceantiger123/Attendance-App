@@ -17,7 +17,7 @@ const Member = db.define('member', {
   image: {
     type: Sequelize.TEXT,
     allowNull: true,
-    defaultValue: "/Users/benye/Desktop/fullstack/aaafolder/asynweek/face-detect/imageHead.webp"
+    defaultValue: "https://image.shutterstock.com/image-vector/human-head-icon-profile-black-600w-1916481893.jpg"
   }
 })
 
