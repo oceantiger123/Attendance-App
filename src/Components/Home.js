@@ -1,45 +1,52 @@
 import { Calendar } from "react-calendar";
-//import AttendentCalendar from "./calendar";
 import React, { useState} from 'react';
 import "./Home.css"
 import axios from "axios";
-//import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const Home = () => {
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState({});
   const [attendance, setAttendance] = useState([]);
   
   const onChange = async(date) => {
     let curDate = date.toString().slice(4,15)
-    const {data: msg} = await axios.get(`/api/dates/:id/:id/:id?date=${curDate}`);
-    setDate(curDate);
-    if(msg === "not existed"){
-      const {data: dates} = await axios.get('/api/dates');
-      await axios.post('/api/dates', {"id": dates.length+1, "date": curDate})
+    const {data: dateObj} = await axios.get(`/api/dates/:id/:id/:id?date=${curDate}`);
+    if(dateObj === "not existed"){
+      const {data: createdDate} = await axios.post('/api/dates', {"date": curDate});
+      setDate(createdDate);
+      setAttendance([])
     } else{
-      const {data: attendance} = await axios.get(`/api/dates/:id/:date?findDate=${curDate}`);
-        if(attendance === 'Not Found') setAttendance([]);
-        else setAttendance(attendance);
+      const {data: attendance} = await axios.get(`/api/dates/${dateObj.id}`);
+      setDate(dateObj)
+      setAttendance(attendance);
       }
     };
 
     return (
       <div className="home">
-        <h1 style={{ textAlign: "center" }}>Welcome to Hall 7 Attendence Application</h1>
+        <h1 style={{ textAlign: "center" }}>Welcome to 14th Ave and 17th Ave Attendence Application</h1>
         <Calendar onChange={onChange}/>
 
         {attendance.length > 0 ? (
 
       <div>
-          <h3>The following members attended on {date}:</h3>
+          <h3>The following members attended on {date.date}:</h3>
+          <Link to={`/dates/${date.id}`} state={date.date}>
+           <button>Edit Attendance</button>  
+          </Link>
               {attendance.map((attender)=>(
                 <li key={attender.id}>
-                  {attender.member.name} 
+                  {attender.name} 
                 </li>
               ))}
       </div>
       ) : (
-        <h3 > NO ATTENDENCE on {date}</h3>  
+        <div>
+          <h3 > NO ATTENDENCE Click on any day: {date.date}</h3>
+          <Link to={`/dates/${date.id}`} state={date.date}>
+           <button>Edit Attendance</button>  
+          </Link>
+        </div>
       )
       }
       </div>

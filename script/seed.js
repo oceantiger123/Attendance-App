@@ -66,17 +66,17 @@ const {db, models: { Member, Date, Member_Date}} = require('../server/db')
 //     password: '123'
 //   },
 // ]
-const dummyData = [{id: 1, name: "Sarah", imageUrl: "Photo-Coming"}, 
-                    {id: 2, name: "James", imageUrl: "Photo-Coming"}, 
-                    {id: 3, name: "John", imageUrl: "Photo-Coming"}];
+const dummyData = [{id: 1, name: "Sarah",}, 
+                    {id: 2, name: "James"}, 
+                    {id: 3, name: "John"}];
 
 const dummyAttendance = [{memberId: 1, dateId: 1},
                      {memberId: 1, dateId: 2},
                      {memberId: 2, dateId: 3},
                      {memberId: 1, dateId: 4}];
 
-const dummyDates = [{id: 1, date: '5/1/2022'},
-                     {id: 2, date: '5/2/2022'},
+const dummyDates = [{id: 1, date: 'May 01 2022'},
+                     {id: 2, date: 'May 02 2022'},
                      {id: 3, date: 'Jul 02 2022'},
                      {id: 4, date: 'Jul 01 2022'}];
 

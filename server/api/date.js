@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const {
-    models: { Date, Member_Date, Member },
+    models: { Date, Member_Date, Member }, models,
 } = require("../db");
+const {Op} = require("sequelize");
 
 //get /api/dates
 router.get("/", async(req, res, next) => {
@@ -17,18 +18,19 @@ router.get("/", async(req, res, next) => {
 //get /api/dates/:id
 router.get("/:id", async(req, res, next) =>{
     try{
-        const singleDateAttend = await Member_Date.findAll({
-            where: {
-                dateId: req.params.id
-            },
-            include: [{model: Member}, {model: Date}]
-            
+        const singleDateAttend = await Member.findAll({
+            include: {
+                model: Member_Date,
+                where: {
+                   dateId: req.params.id
+                }
+            }
         })
         res.json(singleDateAttend)
     } catch(err){
         next(err)
     }
-})
+});
 //get /api/date/:id/:id/:id?date=Date
 router.get("/:id/:id/:id", async(req, res, next) =>{
     try{
@@ -38,50 +40,23 @@ router.get("/:id/:id/:id", async(req, res, next) =>{
                 date: bodyText.date
             }
         });
-        if(date[0]) {
-            res.send("existed")
-        } else {
-            res.send("not existed");
-        }
-        //res.json(bodyText)
+        if(date[0]) res.json(date[0]);
+        else res.send("not existed");
     } catch(err){
         next(err)
     }
 });
-//get /api/date/:id/:date?findDate=Date
-router.get("/:id/:date", async(req, res, next) =>{
-    try{
-        const bodyText = req.query;
-        const date = await Date.findAll({
-            where: {
-                date: bodyText.findDate
-            }
-        });
-        if(date[0]) {
-            const singleDateAttend = await Member_Date.findAll({
-                where: {
-                    dateId: date[0].id
-                },
-                include: [{model: Member}, {model: Date}]
-                
-            })
-            res.json(singleDateAttend)
-        } else {
-            res.send("Not Found");
-        }
-        //res.json(bodyText)
-    } catch(err){
-        next(err)
-    }
-})
 
 //post /api/dates
 router.post("/", async(req, res, next)=>{
     try{
-        console.log(req.body)
-        await Date.create(req.body);
+        console.log(req.body);
+        let curBody = req.body;
         const dates = await Date.findAll();
-        res.status(201).send(dates)
+        let newBody = {...curBody, "id": dates.length+1};
+        let output = await Date.create(newBody);
+        //const dates = await Date.findAll();
+        res.status(201).send(output)
     }catch(err){
         next(err)
     }

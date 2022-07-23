@@ -11,7 +11,7 @@ const Member = db.define('member', {
   },
   phone: {
       type: Sequelize.INTEGER,
-      allowNull: true,
+      allowNull: false,
       defaultValue: 1234567890
   },
   image: {
