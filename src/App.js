@@ -8,9 +8,10 @@ import Members from "./Components/member/member";
 import {Routes, Route} from 'react-router-dom'
 import Home from "./Components/Home";
 import Navbar from "./Components/Navbar";
-import Dates from "./Components/dates/dates";
+//import Dates from "./Components/dates/dates";
 import SingleDateAttendance from "./Components/singleDateAttended/attendance";
 import { Onemember } from "./Components/member/oneMember";
+import Login from "./Components/Login";
 
 // const app = new Clarifai.App({ apiKey: "bbcb6e3cd926404da5e1207117fbec31" });
 
@@ -85,7 +86,7 @@ const App = () => {
       <Routes>
       <Route exact path="/" element={<Home />}/>
        <Route exact path="/members" element={<Members />}/>
-       <Route exact path="/dates" element={<Dates />}/>
+       <Route exact path="/login" element={<Login />}/>
        <Route exact path="/members/:id" element={<Onemember />}/>
        <Route exact path="/dates/:id" element={<SingleDateAttendance />}/>
        <Route exact path="/calendar" element={<AttendentCalendar />}/>
