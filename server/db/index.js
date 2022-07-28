@@ -2,9 +2,10 @@
 
 const db = require('./db')
 
-const Member = require('./models/Member')
-const Date = require('./models/Date')
-const Member_Date = require('./models/MemberDate')
+const Member = require('./models/Member');
+const Date = require('./models/Date');
+const Member_Date = require('./models/MemberDate');
+const Admin = require('./models/Admin');
 
 // const User = require('./models/User')
 // const Order = require('./models/Order')
@@ -30,9 +31,7 @@ module.exports = {
    models: {
        Member,
        Date,
-      Member_Date
-    //   Product,
-    //   Order,
-    //   Order_Products
+      Member_Date,
+      Admin
     },
   }

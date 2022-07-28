@@ -1,84 +1,22 @@
 'use strict'
 
-const {db, models: { Member, Date, Member_Date}} = require('../server/db')
-//const {Date} = require('../server/db/models')
+const {db, models: { Member, Date, Member_Date, Admin}} = require('../server/db')
 
-// const productsDummyData = [
-//   {
-//     name: 'plush monkey',
-//     price: 10,
-//     stock: 3,
-//     animalType: 'monkey'
-//   },
-//   {
-//     name: 'plush cat',
-//     price: 20,
-//     stock: 10,
-//     animalType: 'cat'
-//   },
-//   {
-//     name: 'plush dog',
-//     price: 10,
-//     stock: 20,
-//     animalType: 'dog'
-//   },
-//   {
-//     name: 'plush bird',
-//     price: 30,
-//     stock: 30,
-//     animalType: 'bird'
-//   },
-//   {
-//     name: 'plush bear',
-//     price: 10,
-//     stock: 30,
-//     animalType: 'bear'
-//   },
-//   {
-//     name: 'plush squirrel',
-//     price: 15,
-//     stock: 7,
-//     animalType: 'squirrel'
-//   },
-//   {
-//     name: 'plush dog agian',
-//     price: 40,
-//     stock: 4,
-//     animalType: 'dog'
-//   },
-//   {
-//     name: 'plush cat again',
-//     price: 10,
-//     stock: 5,
-//     animalType: 'cat'
-//   },
-// ]
-
-// const usersDummyData = [
-//   {
-//     username: 'Jiefei',
-//     email: 'wangjfmh@gmail.com',
-//     password: '123'
-//   },
-//   {
-//     username: 'Lily',
-//     email: 'lily@gmail.com',
-//     password: '123'
-//   },
-// ]
-const dummyData = [{id: 1, name: "Sarah",}, 
-                    {id: 2, name: "James"}, 
-                    {id: 3, name: "John"}];
+const dummyData = [{name: "Sarah",}, 
+                    {name: "James"}, 
+                    {name: "John"}];
 
 const dummyAttendance = [{memberId: 1, dateId: 1},
                      {memberId: 1, dateId: 2},
                      {memberId: 2, dateId: 3},
                      {memberId: 1, dateId: 4}];
 
-const dummyDates = [{id: 1, date: 'May 01 2022'},
-                     {id: 2, date: 'May 02 2022'},
-                     {id: 3, date: 'Jul 02 2022'},
-                     {id: 4, date: 'Jul 01 2022'}];
+const dummyDates = [{date: 'May 01 2022'},
+                     {date: 'May 02 2022'},
+                     {date: 'Jul 02 2022'},
+                     {date: 'Jul 01 2022'}];
+
+const dummyAdmin = [{username: "admin", password: '123'}];
 
 /**
  * seed - this function clears the database, updates tables to
@@ -95,18 +33,14 @@ async function seed() {
 
   const attendantDate = await Promise.all(dummyAttendance.map(attendDate => Member_Date.create(attendDate)))
 
-  //const users = await Promise.all(usersDummyData.map(user => User.create(user)))
+  const admin = await Promise.all(dummyAdmin.map(user => Admin.create(user)))
 
   console.log(`seeded ${members.length}  members`)
   console.log(`seeded ${dates.length}  dates`)
   console.log(`seeded ${attendantDate.length}  attendantDate`)
+  console.log(`seeded ${admin.length}  admin`)
   console.log(`seeded successfully`)
-  // return {
-  //   users: {
-  //     cody: users[0],
-  //     murphy: users[1]
-  //   }
-  // }
+  
 }
 
 /*

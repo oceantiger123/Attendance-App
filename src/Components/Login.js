@@ -1,17 +1,35 @@
+import axios from "axios";
 import { useState } from "react";
 import "./Login.css";
 
-const Login = () => {
+const Login = (props) => {
     const [user, setUser] = useState({});
+    const [error, setError] = useState('');
+
     const handleChange = (event)=>{
         setUser({
             ...user,
             [event.target.name]: event.target.value
         });
     };
-    //console.log(user)
-  const handleSubmit = () => {};
+  const redirect = ()=>{
+    window.location.href = '/'
+  } 
+  const handleSubmit = async(event) => {
+    event.preventDefault();
+    try {
+      const {data:token} = await axios.post('/auth/login', user);
+      console.log('token', token)
+      
+      window.localStorage.setItem('token', token.token);
+      redirect()
 
+    } catch (err){
+      console.log(err)
+      setError(err.response.data)
+    }
+  };
+  
   return (
     <div className="login-comp">
       <form onSubmit={handleSubmit}>
@@ -31,6 +49,7 @@ const Login = () => {
           <button type="submit">Log In</button>
         </div>
         {/* {error && error.response && <div> {error.response.data} </div>} */}
+        <div>{error} </div>
       </form>
     </div>
   );

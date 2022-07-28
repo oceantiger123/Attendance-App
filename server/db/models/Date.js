@@ -4,7 +4,7 @@ const db = require('../db')
 const Date = db.define('date', {
     date: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
         validate: {
             notEmpty: true
         }

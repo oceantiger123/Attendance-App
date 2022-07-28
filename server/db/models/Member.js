@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize')
+const Sequelize = require('sequelize');
 const db = require('../db')
 
 const Member = db.define('member', {
@@ -19,7 +19,7 @@ const Member = db.define('member', {
     allowNull: true,
     defaultValue: "https://image.shutterstock.com/image-vector/human-head-icon-profile-black-600w-1916481893.jpg"
   }
-})
+});
 
 module.exports = Member
 //   price: {

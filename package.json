@@ -7,9 +7,12 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.27.2",
+    "babel": "^6.23.0",
+    "bcrypt": "^5.0.1",
     "clarifai": "^2.9.1",
     "express": "^4.18.1",
     "install": "^0.13.0",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "npm": "^7.24.1",
     "pg": "^8.7.3",
@@ -20,6 +23,7 @@
     "react-scripts": "4.0.3",
     "sequelize": "^6.19.2",
     "tachyons": "^4.12.0",
+    "tsutils": "^3.21.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -29,7 +33,7 @@
     "eject": "react-scripts eject",
     "seed": "node script/seed.js",
     "start:dev:seed": "SEED=true npm run start:dev",
-    "start-server": "node server"
+    "start-server": "JWT=shh node server -e html,js,scss --ignore public --ignore client"
   },
   "eslintConfig": {
     "extends": [
@@ -50,5 +54,4 @@
     ]
   },
   "proxy": "http://localhost:3000"
-
 }
