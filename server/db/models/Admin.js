@@ -47,7 +47,6 @@ module.exports = Admin
     try {
       const res = await jwt.verify(token, process.env.JWT);
       const admin = Admin.findByPk(res.id)
-      console.log(admin)
       if (!admin) {
           const err = Error('nooo');
         throw err;

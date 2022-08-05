@@ -90,7 +90,6 @@ const App = () => {
           authorization: token
         }
       })
-      console.log(user)
       setAuth(user)
     })()
   },[token])

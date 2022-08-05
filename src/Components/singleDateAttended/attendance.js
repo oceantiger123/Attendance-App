@@ -27,7 +27,14 @@ const SingleDateAttendance = () => {
 
   const handleSubmit1 = async (event) => {
     event.preventDefault();
-    let formData = { memberId: event.target.value, dateId: myparam };
+    let formData = notAttendees.reduce((pre, curMember)=> {
+      if(curMember.isChecked){
+        let curForm = {"memberId": curMember.id, "dateId": myparam};
+        pre = [...pre, curForm];
+      }
+      return pre
+    }
+    ,[]);
     await axios.post("/api/attendance", formData);
     const { data: attendances } = await axios.get(`/api/dates/${myparam}`);
     setAttendance(attendances);
@@ -38,10 +45,7 @@ const SingleDateAttendance = () => {
   const handleSubmit2 = async (event) => {
     event.preventDefault();
     let membersToDelete=attendance.filter(member=>member.isChecked===true);
-    console.log('todelete', membersToDelete)
     await axios.delete(`/api/attendance/${myparam}`, {data: membersToDelete})
-    // let memberId = event.target.value;
-    // await axios.delete(`/api/attendance/${memberId}/${myparam}`);
     const { data: attendances } = await axios.get(`/api/dates/${myparam}`);
     setAttendance(attendances);
     const { data: notAttended } = await axios.get(`/api/attendance/${myparam}`);
@@ -56,10 +60,21 @@ const SingleDateAttendance = () => {
         setAttendance(tempAttended);
       } else {
         let tempAttended=attendance.map((attender)=>attender.name===value ? {...attender, isChecked: checked} : attender);
-        console.log(tempAttended)
         setAttendance(tempAttended)
       }
-  }
+  };
+    const toggleUnattended = (event)=>{
+      const {value, checked} = event.target;
+      if(value==="selectAll"){
+        let tempUnattended=notAttendees.map((member)=>{
+          return {...member, isChecked: checked}
+      });
+        setNotAttendees(tempUnattended);
+      } else{
+        let tempUnattended = notAttendees.map((member)=>member.name === value ? {...member, isChecked: checked} : member);
+        setNotAttendees(tempUnattended);
+      }
+    }
   return (
     <div className="attendanceComp">
       <div>
@@ -68,12 +83,12 @@ const SingleDateAttendance = () => {
           {attendance.length}{" "}
         </h3>
         <fieldset>
-          <legend>Choose the following member to delete from the attendance OR Choose 'Select All' to delete all members</legend>
+          <legend>Using checkbox to choose to remove from the attendance</legend>
         <input 
           type="checkbox"
           name="attended-check-input" 
           value="allSelect"
-          onClick={toggleAttended}
+          onChange={toggleAttended}
           checked={attendance.filter((attender)=>attender?.isChecked !==true).length < 1}
            /> Select All<br/>
         {attendance.map((attender) => (
@@ -82,14 +97,9 @@ const SingleDateAttendance = () => {
               type="checkbox" 
               name="attended-check-input" 
               value={attender.name}
-              onClick={toggleAttended}
+              onChange={toggleAttended}
               checked={attender?.isChecked || false}
               />{attender.name}<br/>
-            {/* <label for="member">{attender.name}</label> */}
-            {/* <ul>{attender.name}</ul>
-            <button onClick={handleSubmit2} value={attender.id}>
-              Delete from attendance
-            </button> */}
           </ul>
         ))}
         <button onClick={handleSubmit2}>
@@ -99,17 +109,35 @@ const SingleDateAttendance = () => {
       </div>
       <div>
         <h3>
-          The total of the following members NOT attend on {state}:{" "}
+          The total of the following members NOT are in attendance on {state}:{" "}
           {notAttendees.length}{" "}
         </h3>
+        <fieldset>
+          <legend>Using checkbox to choose to add to the attendance</legend>
+          <input 
+            type="checkbox"
+            name="unattended-member-input"
+            value="selectAll"
+            onChange={toggleUnattended}
+            checked={notAttendees.filter((member)=>member?.isChecked !== true).length < 1}
+            />Select All
+          <br/>
         {notAttendees.map((attender) => (
-          <div key={attender.id}>
-            <ul>{attender.name}</ul>
-            <button onClick={handleSubmit1} value={attender.id}>
-              Add to attendance
-            </button>
-          </div>
+          <ul key={attender.id}>
+            <input 
+              type="checkbox"
+              name="unattended-member-input"
+              value={attender.name}
+              onChange={toggleUnattended}
+              checked={attender?.isChecked || false}
+              /> {attender.name}
+              <br/>
+          </ul>
         ))}
+        <button onClick={handleSubmit1}>
+            Add to attendance
+          </button>
+        </fieldset>
       </div>
     </div>
   );

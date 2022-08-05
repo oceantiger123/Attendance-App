@@ -19,13 +19,11 @@ const Login = (props) => {
     event.preventDefault();
     try {
       const {data:token} = await axios.post('/auth/login', user);
-      console.log('token', token)
       
       window.localStorage.setItem('token', token.token);
       redirect()
 
     } catch (err){
-      console.log(err)
       setError(err.response.data)
     }
   };

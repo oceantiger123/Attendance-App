@@ -38,7 +38,7 @@ router.get("/:id", async (req, res, next) => {
 //post /api/attendance
 router.post("/", async (req, res, next) => {
   try {
-    const attended = await Member_Date.create(req.body);
+    const attended = await Member_Date.bulkCreate(req.body);
     res.status(201).send(attended);
   } catch (err) {
     next(err);

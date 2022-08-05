@@ -50,7 +50,6 @@ router.get("/:id/:id/:id", async(req, res, next) =>{
 //post /api/dates
 router.post("/", async(req, res, next)=>{
     try{
-        console.log(req.body);
         let curBody = req.body;
         const dates = await Date.findAll();
         let newBody = {...curBody, "id": dates.length+1};
