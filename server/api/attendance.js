@@ -45,17 +45,19 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-//delete /api/attendance/:memberId/:dateId
-router.delete("/:memberId/:dateId", async (req, res, next) => {
+//delete /api/attendance/:dateId
+router.delete("/:dateId", async (req, res, next) => {
   try {
-    const attended = await Member_Date.findOne({
-      where: {
-        memberId: req.params.memberId,
-        dateId: req.params.dateId
-      },
-    });
-    await attended.destroy();
-    res.send(attended);
+    for(let member of req.body){
+      let attended = await Member_Date.findOne({
+        where: {
+          memberId: member.id,
+          dateId: req.params.dateId
+        },
+      });
+      await attended.destroy();
+    }
+    res.send(req.body);
   } catch (err) {
     next(err);
   }

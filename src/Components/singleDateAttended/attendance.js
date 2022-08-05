@@ -37,14 +37,29 @@ const SingleDateAttendance = () => {
 
   const handleSubmit2 = async (event) => {
     event.preventDefault();
-    let memberId = event.target.value;
-    await axios.delete(`/api/attendance/${memberId}/${myparam}`);
+    let membersToDelete=attendance.filter(member=>member.isChecked===true);
+    console.log('todelete', membersToDelete)
+    await axios.delete(`/api/attendance/${myparam}`, {data: membersToDelete})
+    // let memberId = event.target.value;
+    // await axios.delete(`/api/attendance/${memberId}/${myparam}`);
     const { data: attendances } = await axios.get(`/api/dates/${myparam}`);
     setAttendance(attendances);
     const { data: notAttended } = await axios.get(`/api/attendance/${myparam}`);
     setNotAttendees(notAttended);
   };
-
+  const toggleAttended = (event)=>{
+      const {value, checked} = event.target;
+      if(value==="allSelect"){
+        let tempAttended=attendance.map(attender=>{
+          return {...attender, isChecked: checked};
+        })
+        setAttendance(tempAttended);
+      } else {
+        let tempAttended=attendance.map((attender)=>attender.name===value ? {...attender, isChecked: checked} : attender);
+        console.log(tempAttended)
+        setAttendance(tempAttended)
+      }
+  }
   return (
     <div className="attendanceComp">
       <div>
@@ -52,14 +67,35 @@ const SingleDateAttendance = () => {
           The total of the following members attend on {state}:{" "}
           {attendance.length}{" "}
         </h3>
+        <fieldset>
+          <legend>Choose the following member to delete from the attendance OR Choose 'Select All' to delete all members</legend>
+        <input 
+          type="checkbox"
+          name="attended-check-input" 
+          value="allSelect"
+          onClick={toggleAttended}
+          checked={attendance.filter((attender)=>attender?.isChecked !==true).length < 1}
+           /> Select All<br/>
         {attendance.map((attender) => (
-          <div key={attender.id}>
-            <ul>{attender.name}</ul>
+          <ul key={attender.id}>
+            <input 
+              type="checkbox" 
+              name="attended-check-input" 
+              value={attender.name}
+              onClick={toggleAttended}
+              checked={attender?.isChecked || false}
+              />{attender.name}<br/>
+            {/* <label for="member">{attender.name}</label> */}
+            {/* <ul>{attender.name}</ul>
             <button onClick={handleSubmit2} value={attender.id}>
               Delete from attendance
-            </button>
-          </div>
+            </button> */}
+          </ul>
         ))}
+        <button onClick={handleSubmit2}>
+              Delete from attendance
+            </button>
+      </fieldset>
       </div>
       <div>
         <h3>
