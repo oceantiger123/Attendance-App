@@ -8,10 +8,22 @@ const Members = () => {
     const [formData, setFormData] = useState({});
 
     useEffect(()=>{
+      const cancelToken = axios.CancelToken.source();
+
       (async()=>{
-        const {data: member} = await axios.get('/api/members');
-        setMembers(member);
+        try{
+          const {data: member} = await axios.get('/api/members', {cancelToken: cancelToken.token});
+          setMembers(member);
+
+        }catch(err){
+          if(axios.isCancel(err)) console.log("cancelled!")
+          else {//todo:handle error
+          }
+        }
       })();
+      return ()=>{
+         cancelToken.cancel();
+      }
     }, []);
 
     const handleChange = (event) => {
@@ -41,15 +53,17 @@ const Members = () => {
           </form>
 
           <h3>Total Number of Members: {members.length}</h3>
+          <div style={{display: "flex", flexWrap: "wrap"}}>
             {members.map((member) => (
+              <div style={{width: '100px', height: '30px',textAlign: "left"}} key={member.id}>
               <Link to={`/members/${member.id}`} key={member.id}>
-               <ul>
+               <div>
                  {member.name}
-               </ul>
+               </div>
               </Link>
+              </div>
             ))}
-
-           
+            </div> 
       </div>
     )
   };

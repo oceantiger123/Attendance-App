@@ -1,18 +1,15 @@
 import {useEffect, useState} from "react";
 import "./App.css";
-//import ImageSearchForm from "./Components/ImageSearchForm/ImageSearchForm";
-//import FaceDetect from "./Components/FaceDetect/FaceDetect";
-//import Clarifai from "clarifai";
 import AttendentCalendar from "./Components/calendar";
 import Members from "./Components/member/member";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Components/Home";
 import Navbar from "./Components/Navbar";
-//import Dates from "./Components/dates/dates";
 import SingleDateAttendance from "./Components/singleDateAttended/attendance";
 import { Onemember } from "./Components/member/oneMember";
 import Login from "./Components/Login";
 import axios from "axios";
+import Updatepassword from "./Components/updatePassword/updatepassword";
 
 // const app = new Clarifai.App({ apiKey: "bbcb6e3cd926404da5e1207117fbec31" });
 
@@ -102,10 +99,10 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/members" element={<Members />} />
-            {/* <Route exact path="/login" element={<Login />} /> */}
             <Route exact path="/members/:id" element={<Onemember />} />
             <Route exact path="/dates/:id" element={<SingleDateAttendance />} />
             <Route exact path="/calendar" element={<AttendentCalendar />} />
+            <Route exact path="/updatepassword" element={<Updatepassword />} />
           </Routes>
         </div>
       ) : (

@@ -14,16 +14,13 @@ const SingleDateAttendance = () => {
       const { data: attendances } = await axios.get(`/api/dates/${myparam}`);
       setAttendance(attendances);
     })();
-  }, [myparam]);
-
-  useEffect(() => {
     (async () => {
       const { data: notAttended } = await axios.get(
         `/api/attendance/${myparam}`
       );
       setNotAttendees(notAttended);
     })();
-  }, [myparam]);
+  },[myparam]);
 
   const handleSubmit1 = async (event) => {
     event.preventDefault();
@@ -77,12 +74,12 @@ const SingleDateAttendance = () => {
     }
   return (
     <div className="attendanceComp">
-      <div>
-        <h3>
+      <div style={{width: '1000px', height: '500px'}}>
+        <fieldset>
+          <h3>
           The total of the following members attend on {state}:{" "}
           {attendance.length}{" "}
         </h3>
-        <fieldset>
           <legend>Using checkbox to choose to remove from the attendance</legend>
         <input 
           type="checkbox"
@@ -91,8 +88,10 @@ const SingleDateAttendance = () => {
           onChange={toggleAttended}
           checked={attendance.filter((attender)=>attender?.isChecked !==true).length < 1}
            /> Select All<br/>
+     <hr></hr>
+     <div style={{display: "flex", alignItems: "stretch", flexWrap: "wrap"}}>
         {attendance.map((attender) => (
-          <ul key={attender.id}>
+          <div style={{width: '100px', height: '20px', textAlign: 'left'}} key={attender.id}>
             <input 
               type="checkbox" 
               name="attended-check-input" 
@@ -100,20 +99,22 @@ const SingleDateAttendance = () => {
               onChange={toggleAttended}
               checked={attender?.isChecked || false}
               />{attender.name}<br/>
-          </ul>
+          </div>
         ))}
+        </div>
+        <hr></hr>
         <button onClick={handleSubmit2}>
               Delete from attendance
             </button>
       </fieldset>
       </div>
-      <div>
+      <div style={{width: '1000px', height: '500px'}}>
+        <fieldset>
+          <legend>Using checkbox to choose to add to the attendance</legend>
         <h3>
           The total of the following members NOT are in attendance on {state}:{" "}
           {notAttendees.length}{" "}
         </h3>
-        <fieldset>
-          <legend>Using checkbox to choose to add to the attendance</legend>
           <input 
             type="checkbox"
             name="unattended-member-input"
@@ -122,18 +123,23 @@ const SingleDateAttendance = () => {
             checked={notAttendees.filter((member)=>member?.isChecked !== true).length < 1}
             />Select All
           <br/>
+        <hr></hr>
+        <div style={{display: "flex", alignItems: "stretch", flexWrap: "wrap"}}>
         {notAttendees.map((attender) => (
-          <ul key={attender.id}>
+          <div style={{width: '100px', height: '20px', textAlign: 'left'}} key={attender.id}>
             <input 
               type="checkbox"
               name="unattended-member-input"
               value={attender.name}
               onChange={toggleUnattended}
               checked={attender?.isChecked || false}
-              /> {attender.name}
-              <br/>
-          </ul>
+              /> 
+              <label>{attender.name}
+                </label>
+          </div>
         ))}
+          </div>
+        <hr></hr>
         <button onClick={handleSubmit1}>
             Add to attendance
           </button>

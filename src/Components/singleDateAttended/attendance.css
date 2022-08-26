@@ -1,6 +1,21 @@
 .attendanceComp {
-
+   text-align: center;
+   display: flex;
+   /* justify-content: center; */
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 15px;
   };
+
+.unorderedList {
+    display: flex;
+    align-items: flex-start;
+  };
+
+/* 
+  ul {
+    text-align: center;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  } */
