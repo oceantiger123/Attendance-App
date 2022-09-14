@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import "./updatepassword.css";
 
@@ -11,10 +12,18 @@ const Updatepassword = () =>{
             [event.target.name]: event.target.value
         });
     };
-    const handleSubmit = (event)=>{
+    const handleSubmit = async (event)=>{
         event.preventDefault();
         if(user.newpassword!==user.newpasswordagain) setError("New Password Again doesn't match New Password");
         //console.log(error)
+        else {
+          try{
+            const {data: admin}= await axios.put('/auth/updatepassword', user)
+            if(admin){setError("password has been updated")}
+          } catch (err){
+            setError(err.response.data)
+          }
+        }
     };
     return (
         <div className="updatepassword">

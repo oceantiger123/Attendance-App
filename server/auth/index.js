@@ -16,21 +16,16 @@ router.get('/me', async (req, res, next) => {
   try {
    //req.headers.authorization = token
     res.send(await Admin.findByToken(req.headers.authorization))
-  } catch (ex) {
-    next(ex)
+  } catch (err) {
+    next(err)
   }
 });
 
-// router.post('/signup', async (req, res, next) => {
-//   try {
-//     const Admin = await Admin.create(req.body)
-//     res.send({token: await Admin.generateToken()})
-//   } catch (err) {
-//     if (err.name === 'SequelizeUniqueConstraintError') {
-//       res.status(401).send('Admin already exists')
-//     } else {
-//       next(err)
-//     }
-//   }
-// })
-// "start-server": "JWT=shh node server -e html,js,scss --ignore public --ignore client"
+//put /auth/updatepassword
+router.put('/updatepassword', async(req, res, next)=>{
+  try{
+    res.send(await Admin.verify(req.body));
+  } catch (err){
+    next(err)
+  }
+})

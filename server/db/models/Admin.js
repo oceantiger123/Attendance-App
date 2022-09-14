@@ -43,6 +43,17 @@ module.exports = Admin
       return Admin.generateToken();
   };
   
+  Admin.verify = async function({username, password, newpassword}){
+    const Admin = await this.findOne({where: {username}})
+    if (!Admin || !(await Admin.correctPassword(password))){
+      const error = Error('Incorrect username/password');
+      error.status = 401;
+      throw error;
+    }
+    await Admin.update({password: newpassword});
+    return Admin
+  }
+
   Admin.findByToken = async (token)=> {
     try {
       const res = await jwt.verify(token, process.env.JWT);

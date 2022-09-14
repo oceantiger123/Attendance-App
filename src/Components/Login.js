@@ -14,7 +14,8 @@ const Login = () => {
     };
   const redirect = ()=>{
     window.location.href = '/'
-  } 
+  };
+   
   const handleSubmit = async(event) => {
     event.preventDefault();
     try {

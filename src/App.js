@@ -82,12 +82,15 @@ const App = () => {
   const [auth, setAuth] = useState({});
   useEffect(()=>{
     (async()=>{
-      const {data: user} = await axios.get('/auth/me', {
-        headers: {
-          authorization: token
-        }
-      })
-      setAuth(user)
+      try{
+        const {data: user} = await axios.get('/auth/me', {
+          headers: {
+            authorization: token
+          }
+        })
+        setAuth(user)
+      }catch(err){
+      }
     })()
   },[token])
 
