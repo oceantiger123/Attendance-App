@@ -30,15 +30,22 @@ const Home = () => {
         {attendance.length > 0 ? (
 
       <div>
-          <h3>The following members attended on {date.date}:</h3>
+          <h3>The total of following members attended on {date.date}: {attendance.length}</h3>
           <Link to={`/dates/${date.id}`} state={date.date}>
-           <button>Edit Attendance</button>  
+           <button style={{margin: "10px"}}>Edit Attendance</button>  
           </Link>
-              {attendance.map((attender)=>(
-                <li key={attender.id}>
-                  {attender.name} 
-                </li>
-              ))}
+                <div style={{display: "flex", flexWrap: "wrap"}}>
+            {attendance.map((member) => (
+              <div style={{width: '100px', height: '100px', border: "solid", borderColor: "white"}} key={member.id}>
+              <Link to={`/members/${member.id}`} key={member.id}>
+               <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                 <img style={{ width: "30px", margin: "5px" }} src={member.image} alt="" />
+              <label>{member.name}</label>
+               </div>
+              </Link>
+              </div>
+            ))}
+            </div> 
       </div>
       ) : (
         <div>

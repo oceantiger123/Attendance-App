@@ -27,7 +27,7 @@ const Updatepassword = () =>{
     };
     return (
         <div className="updatepassword">
-           <form onSubmit={handleSubmit}>
+           <form onSubmit={handleSubmit} >
         <div style={{textAlign: "right"}}>
           <label htmlFor="username">
             <big>Current Username</big>

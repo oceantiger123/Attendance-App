@@ -77,7 +77,7 @@ const SingleDateAttendance = () => {
       <div style={{width: '1000px', height: '500px'}}>
         <fieldset>
           <h3>
-          The total of the following members attend on {state}:{" "}
+          The total of the following members attended on {state}:{" "}
           {attendance.length}{" "}
         </h3>
           <legend>Using checkbox to choose to remove from the attendance</legend>
@@ -89,16 +89,18 @@ const SingleDateAttendance = () => {
           checked={attendance.filter((attender)=>attender?.isChecked !==true).length < 1}
            /> Select All<br/>
      <hr></hr>
-     <div style={{display: "flex", alignItems: "stretch", flexWrap: "wrap"}}>
+     <div style={{display: "flex", flexWrap: "wrap"}}>
         {attendance.map((attender) => (
-          <div style={{width: '100px', height: '20px', textAlign: 'left'}} key={attender.id}>
+          <div style={{width: '100px', height: '110px', border: "solid", borderColor: "white", display: "flex", flexDirection: "column", alignItems: "center"}} key={attender.id}>
             <input 
               type="checkbox" 
               name="attended-check-input" 
               value={attender.name}
               onChange={toggleAttended}
               checked={attender?.isChecked || false}
-              />{attender.name}<br/>
+              />
+              <img style={{ width: "30px", margin: "5px" }} src={attender.image} alt="" />
+              <label>{attender.name}</label>
           </div>
         ))}
         </div>
@@ -112,7 +114,7 @@ const SingleDateAttendance = () => {
         <fieldset>
           <legend>Using checkbox to choose to add to the attendance</legend>
         <h3>
-          The total of the following members NOT are in attendance on {state}:{" "}
+          The total of the following members are NOT in attendance on {state}:{" "}
           {notAttendees.length}{" "}
         </h3>
           <input 
@@ -124,9 +126,9 @@ const SingleDateAttendance = () => {
             />Select All
           <br/>
         <hr></hr>
-        <div style={{display: "flex", alignItems: "stretch", flexWrap: "wrap"}}>
+        <div style={{display: "flex", flexWrap: "wrap"}}>
         {notAttendees.map((attender) => (
-          <div style={{width: '100px', height: '20px', textAlign: 'left'}} key={attender.id}>
+          <div style={{width: '100px', height: '110px', border: "solid", borderColor: "white", display: "flex", flexDirection: "column", alignItems: "center"}} key={attender.id}>
             <input 
               type="checkbox"
               name="unattended-member-input"
@@ -134,6 +136,7 @@ const SingleDateAttendance = () => {
               onChange={toggleUnattended}
               checked={attender?.isChecked || false}
               /> 
+              <img style={{ width: "30px", margin: "5px" }} src={attender.image} alt="" />
               <label>{attender.name}
                 </label>
           </div>

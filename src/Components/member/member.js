@@ -55,10 +55,11 @@ const Members = () => {
           <h3>Total Number of Members: {members.length}</h3>
           <div style={{display: "flex", flexWrap: "wrap"}}>
             {members.map((member) => (
-              <div style={{width: '100px', height: '30px',textAlign: "left"}} key={member.id}>
+              <div style={{width: '100px', height: '100px', border: "solid", borderColor: "white"}} key={member.id}>
               <Link to={`/members/${member.id}`} key={member.id}>
-               <div>
-                 {member.name}
+               <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                 <img style={{ width: "30px", margin: "5px" }} src={member.image} alt="" />
+              <label>{member.name}</label>
                </div>
               </Link>
               </div>
